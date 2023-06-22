@@ -15,7 +15,7 @@ function TodoList() {
     }
     const newTodo = {
       text: inputValue,
-      completed: false
+      checked: false
     };
     setTodos([...todos, newTodo]);
     setInputValue('');
@@ -29,7 +29,7 @@ function TodoList() {
 
   const handleTodoToggle = (index) => {
     const newTodos = [...todos];
-    newTodos[index].completed = !newTodos[index].completed;
+    newTodos[index].checked = !newTodos[index].checked;
     setTodos(newTodos);
   };
 
@@ -42,13 +42,13 @@ function TodoList() {
       </form>
       <ul>
         {todos.map((todo, index) => (
-          <li key={index} style={todo.completed ? { textDecoration: 'line-through' } : null}>
+          <li key={index} style={todo.checked ? { textDecoration: 'line-through' } : null}>
             <input
               type="checkbox"
-              checked={todo.completed}
+              checked={todo.checked}
               onChange={() => handleTodoToggle(index)}
             />
-            {todo.text}
+            {todo.text}{" "}
             <button onClick={() => handleTodoDelete(index)}>Delete</button>
           </li>
         ))}
