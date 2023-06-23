@@ -1,54 +1,56 @@
 import React, { useState } from 'react';
 
-function TodoList() {
-  const [todos, setTodos] = useState([]);
-  const [inputValue, setInputValue] = useState('');
+function TodoList() {                                     //usestate hook
+  const [todos, setTodos] = useState([]);                 //array of todos
+  const [inputValue, setInputValue] = useState('');       // value of input entered
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event) => {                  // input change / update inputValue
     setInputValue(event.target.value);
   };
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    if (!inputValue.trim()) {
+  const handleFormSubmit = (event) => {                   // when pressed submit
+    event.preventDefault();                               // prevents page reload
+    if (!inputValue.trim()) {                             // check if empty
       return;
     }
-    const newTodo = {
-      text: inputValue,
+    const newTodo = {                                     // for spread ope - input & if checked
+      text: inputValue,                             
       checked: false
     };
-    setTodos([...todos, newTodo]);
-    setInputValue('');
+    setTodos([...todos, newTodo]);                  
+    setInputValue('');                                    // inputValue to empty
   };
 
-  const handleTodoDelete = (index) => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+  const handleTodoDelete = (index) => {                   // when pressed delete
+    const newTodos = [...todos];                          // duplicate todos
+    newTodos.splice(index, 1);                            // remove selected
+    setTodos(newTodos);                                   // update todos
   };
 
-  const handleTodoToggle = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].checked = !newTodos[index].checked;
-    setTodos(newTodos);
+  const handleTodoToggle = (index) => {                   // onChange check/uncheck
+    const newTodos = [...todos];                          // dupli todos
+    newTodos[index].checked = !newTodos[index].checked;   // update selected todos check value
+    setTodos(newTodos);                                   // update todos
   };
 
   return (
     <div>
       <h1>To-Do List</h1>
-      <form onSubmit={handleFormSubmit}>
-        <input type="text" value={inputValue} onChange={handleInputChange} />
+      <form onSubmit={handleFormSubmit}>                                                          {/* form submit - add todos */}
+        <input type="text" value={inputValue} onChange={handleInputChange} />                     {/* sets input value */}
         <button type="submit">Add</button>
       </form>
       <ul>
-        {todos.map((todo, index) => (
-          <li key={index} style={todo.checked ? { textDecoration: 'line-through' } : null}>
+        {todos.map((todo, index) => (                                                             //output todos
+          <li key={index}>       
             <input
               type="checkbox"
               checked={todo.checked}
               onChange={() => handleTodoToggle(index)}
             />
-            {todo.text}{" "}
+            <span style={todo.checked ? { textDecoration: 'line-through' } : null}>               {/* if checked add style line-through */} 
+              {todo.text}
+            </span>
             <button onClick={() => handleTodoDelete(index)}>Delete</button>
           </li>
         ))}
